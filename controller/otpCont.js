@@ -28,9 +28,10 @@ async function handleOtpVerification(req, res) {
         const isMatch = await compare(otp, user.otp);
         if(isMatch){
             await Otp.findOneAndUpdate({ email }, { isVerified:true });
+            return res.status(200).json({ success: true });
         }
         // console.log("Otp isMatched: ", isMatch)
-        return res.status(200).json({ success: true });
+        return res.status(401).json({ success: false });
     } catch (err) {
         console.log(err);
     }
