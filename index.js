@@ -13,6 +13,7 @@ mongoose.connect("mongodb://localhost:27017/banking-app")
 app.set("view engine", "ejs");
 app.set("views", resolve("./views"));
 
+app.use(express.json());
 app.use(express.urlencoded({ extended:true }));
 
 // app.get("/", (req, res) => {

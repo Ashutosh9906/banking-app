@@ -100,7 +100,8 @@
                             Verify Email
                         </button>
                     </div>
-                    <div id="emailHelp" class="form-text text-success d-none mt-1">You have 5 minutes for verification, kindly check your inbox</div>
+                    <div id="emailHelp" class="form-text text-success d-none mt-1">You have 5 minutes for verification,
+                        kindly check your inbox</div>
                 </div>
 
                 <!-- OTP Field (Initially Hidden) -->
@@ -113,8 +114,8 @@
                     <div class="d-flex">
                         <input type="text" class="form-control rounded-0 rounded-start" id="otp" name="otp"
                             placeholder="Enter OTP" required>
-                        <button type="submit" class="btn btn-success rounded-0 rounded-end px-4 fw-semibold"
-                            style="width: 160px;">Verify OTP</button>
+                        <button type="button" class="btn btn-success rounded-0 rounded-end px-4 fw-semibold"
+                            style="width: 160px;" onclick="verifyOtp()">Verify OTP</button>
                     </div>
                 </div>
 
@@ -135,21 +136,23 @@
             let emailHelpTimeout;
             let otpTimerInterval;
             let otpSectionTimeout;
-
+            
             const TIMER_DURATION = 60; // 60 seconds
 
-            function showOtp() {
+            async function showOtp() {
+                const email = document.getElementById('email').value;
                 const emailHelp = document.getElementById('emailHelp');
                 const otpSection = document.getElementById('otpSection');
                 const timerDisplay = document.getElementById('otp-timer');
                 const verifyEmailBtn = document.getElementById('verifyEmailBtn');
-
+                
+                
                 // Show OTP section and email help
                 otpSection.classList.remove('d-none');
                 emailHelp.classList.remove('d-none', 'fade-out');
                 void emailHelp.offsetWidth;
                 emailHelp.classList.add('fade-in');
-
+                
                 // Disable Verify Email button
                 verifyEmailBtn.disabled = true;
 
@@ -162,17 +165,17 @@
                         emailHelp.classList.add('d-none');
                     }, 500);
                 }, 5000);
-
+                
                 // Start OTP timer
                 let remaining = TIMER_DURATION;
                 timerDisplay.classList.remove('d-none');
                 updateTimerDisplay(remaining);
-
+                
                 clearInterval(otpTimerInterval);
                 otpTimerInterval = setInterval(() => {
                     remaining--;
                     updateTimerDisplay(remaining);
-
+                    
                     if (remaining <= 0) {
                         clearInterval(otpTimerInterval);
                         timerDisplay.classList.add('fade-out');
@@ -181,11 +184,11 @@
                             timerDisplay.classList.remove('fade-out');
                             timerDisplay.textContent = '';
                         }, 500);
-
+                        
                         verifyEmailBtn.disabled = false; // Re-enable button
                     }
                 }, 1000);
-
+                
                 // Hide otp field after 5 minutes
                 clearTimeout(otpSectionTimeout);
                 otpSectionTimeout = setTimeout(() => {
@@ -195,7 +198,17 @@
                         otpSection.classList.add('d-none');
                     }, 500);
                 }, 1000 * 60 * 5);
+                
+                //giving call to route
+                const response = await fetch("/user/sendOtp", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json" // Tells the server you're sending JSON
+                    },
+                    body: JSON.stringify({ email }),
+                })
             }
+            
 
 
             function updateTimerDisplay(seconds) {
@@ -203,6 +216,24 @@
                 const minutes = Math.floor(seconds / 60);
                 const secs = seconds % 60;
                 timerDisplay.textContent = `Resend OTP in ${minutes}:${secs.toString().padStart(2, '0')}`;
+            }
+            
+            async function verifyOtp() {
+                const email = document.getElementById('email').value;
+                const otp = document.getElementById('otp').value;
+                const response = await fetch("/user/verifyOtp", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json" // Tells the server you're sending JSON
+                    },
+                    body: JSON.stringify({ email, otp }),
+                })
+                if(response.ok){
+                    alert("verified successfully");
+                } else {
+                    alert("not verified");
+                }
+
             }
         </script>
 
