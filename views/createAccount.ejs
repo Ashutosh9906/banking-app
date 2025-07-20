@@ -93,8 +93,10 @@
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
                     <div class="d-flex">
-                        <input type="email" class="form-control rounded-0 rounded-start" aria-required="true" id="email"
-                            name="email" placeholder="Enter email" required>
+                        <input type="email"
+                            pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
+                            class="form-control rounded-0 rounded-start" aria-required="true" id="email" name="email"
+                            placeholder="Enter email" required>
                         <button type="button" class="btn btn-primary rounded-0 rounded-end px-4 fw-semibold"
                             style="width: 160px;" onclick="showOtp()" id="verifyEmailBtn">
                             Verify Email
@@ -155,7 +157,30 @@
                 const timerDisplay = document.getElementById('otp-timer');
                 const verifyEmailBtn = document.getElementById('verifyEmailBtn');
 
-                if(email == ""){
+                if (email == "") {
+                    return;
+                }
+                const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!(pattern.test(email))) {
+                    // Show invalid message
+                    emailHelp.innerText = "❌ Invalid Email";
+                    emailHelp.classList.add("text-danger");
+                    emailHelp.classList.remove("d-none", "fade-out");
+                    void emailHelp.offsetWidth;
+                    emailHelp.classList.add("fade-in");
+
+                    // Hide and reset after 2 seconds
+                    setTimeout(() => {
+                        emailHelp.classList.remove("fade-in");
+                        emailHelp.classList.add("fade-out");
+
+                        setTimeout(() => {
+                            emailHelp.classList.add("d-none");
+                            emailHelp.classList.remove("text-danger", "fade-out");
+                            emailHelp.innerText = "We'll never share your email with anyone else.";
+                        }, 500); // Wait for fade-out to complete
+                    }, 2000); // Show for 2 seconds
+
                     return;
                 }
 

@@ -3,21 +3,34 @@ const crpto = require("crypto");
 const { sendOtp } = require("../utilities/otpUtilty");
 const { hash } = require("bcryptjs");
 
-async function handleUserInfo(req, res){
+const Otp = require("../models/otp");
+
+async function handleUserInfo(req, res) {
     //console.log(req.body);
-    const { username, address, BirthDate, email, password } = req.body;
+    try {
+        const { username, address, BirthDate, email, password } = req.body;
 
-    const saltRounds = 10;
-    const hashPassword = await hash(password, saltRounds);
+        const saltRounds = 10;
+        const hashPassword = await hash(password, saltRounds);
 
-    const user = await User.create({
-        username,
-        address,
-        BirthDate,
-        email,
-        password: hashPassword,
-    })
-    return res.redirect("/");
+        const otpUser = await Otp.findOne({ email })
+        //console.log(otpUser);
+        if(!otpUser || !otpUser.isVerified){
+            return res.status(400).json({ msg: "verify your email first" });
+        }
+
+        const user = await User.create({
+            username,
+            address,
+            BirthDate,
+            email,
+            password: hashPassword,
+        })
+        return res.status(200).json({ success: true });
+    } catch (error) {
+        console.log("Error : ", error);
+        return res.status(401).json({ success: false });
+    }
 }
 
 module.exports = {
