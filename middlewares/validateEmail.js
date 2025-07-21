@@ -30,8 +30,18 @@ async function validateOtp(req, res, next){
     next();
 }
 
+async function CheckEmail(req, res, next){
+    const email = req.body.email;
+    const user = await User.findOne({ email });
+    if(user){
+        return res.status(400).json({ msg: "Email Already Exist!" });
+    }
+    next();
+}
+
 module.exports = {
     validateEmail,
     otpCoolDown,
-    validateOtp
+    validateOtp,
+    CheckEmail
 };
