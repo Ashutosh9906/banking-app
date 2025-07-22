@@ -66,257 +66,259 @@
 </head>
 
 <body>
-    <div class="container mt-5">
-        <div class="form-container">
-            <h2 class="mb-4 text-center text-primary">Create Account</h2>
-            <form action="/user/createAccount" method="post">
+    <%- include('./partials/nav') %>
+        <div class="container mt-5">
+            <div class="form-container">
+                <h2 class="mb-4 text-center text-primary">Create Account</h2>
+                <form action="/user/createAccount" method="post">
 
-                <!-- Username -->
-                <div class="mb-3">
-                    <label for="username" class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
-                </div>
-
-                <!-- Address -->
-                <div class="mb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
-                </div>
-
-                <!-- Date of Birth -->
-                <div class="mb-3">
-                    <label for="BirthDate" class="form-label">Date of Birth</label>
-                    <input type="date" class="form-control" id="BirthDate" name="BirthDate" required>
-                </div>
-
-                <!-- Email with Verify Button -->
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
-                    <div class="d-flex">
-                        <input type="email"
-                            pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
-                            class="form-control rounded-0 rounded-start" aria-required="true" id="email" name="email"
-                            placeholder="Enter email" required>
-                        <button type="button" class="btn btn-primary rounded-0 rounded-end px-4 fw-semibold"
-                            style="width: 160px;" onclick="showOtp()" id="verifyEmailBtn">
-                            Verify Email
-                        </button>
-                    </div>
-                    <div id="emailHelp" class="form-text text-success d-none mt-1">You have 5 minutes for verification,
-                        kindly check your inbox</div>
-                </div>
-
-                <!-- OTP Field (Initially Hidden) -->
-                <div id="otpSection" class="mb-3 d-none">
-                    <div class="d-flex align-items-center mb-1">
-                        <label for="otp" class="form-label mb-0 me-2">OTP</label>
-                        <span id="otp-timer" class="text-danger small d-none">01:00</span>
-                    </div>
-                    </label>
-                    <div class="d-flex">
-                        <input type="text" class="form-control rounded-0 rounded-start" id="otp" name="otp"
-                            placeholder="Enter OTP" required>
-                        <button type="button" class="btn btn-success rounded-0 rounded-end px-4 fw-semibold"
-                            style="width: 160px;" onclick="verifyOtp()">Verify OTP</button>
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
                     </div>
 
-                    <!-- Invalid OTP Message -->
-                    <div id="otpError" class="form-text text-danger mt-1 d-none">
-                        ❌ Invalid OTP. Try again.
+                    <!-- Address -->
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
                     </div>
-                </div>
 
-                <div id="otpSuccess" class="form-text text-success mt-2 d-none">
-                    ✅ Email verified successfully!
-                </div>
+                    <!-- Date of Birth -->
+                    <div class="mb-3">
+                        <label for="BirthDate" class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" id="BirthDate" name="BirthDate" required>
+                    </div>
 
-                <!-- Password -->
-                <div class="mb-4">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
+                    <!-- Email with Verify Button -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <div class="d-flex">
+                            <input type="email"
+                                pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
+                                class="form-control rounded-0 rounded-start" aria-required="true" id="email"
+                                name="email" placeholder="Enter email" required>
+                            <button type="button" class="btn btn-primary rounded-0 rounded-end px-4 fw-semibold"
+                                style="width: 160px;" onclick="showOtp()" id="verifyEmailBtn">
+                                Verify Email
+                            </button>
+                        </div>
+                        <div id="emailHelp" class="form-text text-success d-none mt-1">You have 5 minutes for
+                            verification,
+                            kindly check your inbox</div>
+                    </div>
 
-                <!-- Submit -->
-                <button type="submit" class="btn btn-success">Create Account</button>
-            </form>
+                    <!-- OTP Field (Initially Hidden) -->
+                    <div id="otpSection" class="mb-3 d-none">
+                        <div class="d-flex align-items-center mb-1">
+                            <label for="otp" class="form-label mb-0 me-2">OTP</label>
+                            <span id="otp-timer" class="text-danger small d-none">01:00</span>
+                        </div>
+                        </label>
+                        <div class="d-flex">
+                            <input type="text" class="form-control rounded-0 rounded-start" id="otp" name="otp"
+                                placeholder="Enter OTP" required>
+                            <button type="button" class="btn btn-success rounded-0 rounded-end px-4 fw-semibold"
+                                style="width: 160px;" onclick="verifyOtp()">Verify OTP</button>
+                        </div>
+
+                        <!-- Invalid OTP Message -->
+                        <div id="otpError" class="form-text text-danger mt-1 d-none">
+                            ❌ Invalid OTP. Try again.
+                        </div>
+                    </div>
+
+                    <div id="otpSuccess" class="form-text text-success mt-2 d-none">
+                        ✅ Email verified successfully!
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-4">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="btn btn-success">Create Account</button>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <%- include('./partials/scripts') %>
-        <script>
-            let emailHelpTimeout;
-            let otpTimerInterval;
-            let otpSectionTimeout;
+        <%- include('./partials/scripts') %>
+            <script>
+                let emailHelpTimeout;
+                let otpTimerInterval;
+                let otpSectionTimeout;
 
-            const TIMER_DURATION = 60; // 60 seconds
+                const TIMER_DURATION = 60; // 60 seconds
 
-            async function showOtp() {
-                const email = document.getElementById('email').value;
-                const emailHelp = document.getElementById('emailHelp');
-                const otpSection = document.getElementById('otpSection');
-                const timerDisplay = document.getElementById('otp-timer');
-                const verifyEmailBtn = document.getElementById('verifyEmailBtn');
+                async function showOtp() {
+                    const email = document.getElementById('email').value;
+                    const emailHelp = document.getElementById('emailHelp');
+                    const otpSection = document.getElementById('otpSection');
+                    const timerDisplay = document.getElementById('otp-timer');
+                    const verifyEmailBtn = document.getElementById('verifyEmailBtn');
 
-                if (email == "") {
-                    return;
-                }
-                const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!(pattern.test(email))) {
-                    // Show invalid message
-                    emailHelp.innerText = "❌ Invalid Email";
-                    emailHelp.classList.add("text-danger");
-                    emailHelp.classList.remove("d-none", "fade-out");
-                    void emailHelp.offsetWidth;
-                    emailHelp.classList.add("fade-in");
+                    if (email == "") {
+                        return;
+                    }
+                    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!(pattern.test(email))) {
+                        // Show invalid message
+                        emailHelp.innerText = "❌ Invalid Email";
+                        emailHelp.classList.add("text-danger");
+                        emailHelp.classList.remove("d-none", "fade-out");
+                        void emailHelp.offsetWidth;
+                        emailHelp.classList.add("fade-in");
 
-                    // Hide and reset after 2 seconds
-                    setTimeout(() => {
-                        emailHelp.classList.remove("fade-in");
-                        emailHelp.classList.add("fade-out");
-
+                        // Hide and reset after 2 seconds
                         setTimeout(() => {
-                            emailHelp.classList.add("d-none");
-                            emailHelp.classList.remove("text-danger", "fade-out");
-                            emailHelp.innerText = "You have 5 minutes for verification,kindly check your inbox";
-                        }, 500); // Wait for fade-out to complete
-                    }, 2000); // Show for 2 seconds
+                            emailHelp.classList.remove("fade-in");
+                            emailHelp.classList.add("fade-out");
 
-                    return;
-                }
+                            setTimeout(() => {
+                                emailHelp.classList.add("d-none");
+                                emailHelp.classList.remove("text-danger", "fade-out");
+                                emailHelp.innerText = "You have 5 minutes for verification,kindly check your inbox";
+                            }, 500); // Wait for fade-out to complete
+                        }, 2000); // Show for 2 seconds
 
-                // Show OTP section and email help
-                otpSection.classList.remove('d-none');
-                emailHelp.classList.remove('d-none', 'fade-out');
-                void emailHelp.offsetWidth;
-                emailHelp.classList.add('fade-in');
+                        return;
+                    }
 
-                // Disable Verify Email button
-                verifyEmailBtn.disabled = true;
+                    // Show OTP section and email help
+                    otpSection.classList.remove('d-none');
+                    emailHelp.classList.remove('d-none', 'fade-out');
+                    void emailHelp.offsetWidth;
+                    emailHelp.classList.add('fade-in');
 
-                // Hide email help after 5 seconds
-                clearTimeout(emailHelpTimeout);
-                emailHelpTimeout = setTimeout(() => {
-                    emailHelp.classList.remove('fade-in');
-                    emailHelp.classList.add('fade-out');
-                    setTimeout(() => {
-                        emailHelp.classList.add('d-none');
-                    }, 500);
-                }, 5000);
+                    // Disable Verify Email button
+                    verifyEmailBtn.disabled = true;
 
-                // Start OTP timer
-                let remaining = TIMER_DURATION;
-                timerDisplay.classList.remove('d-none');
-                updateTimerDisplay(remaining);
+                    // Hide email help after 5 seconds
+                    clearTimeout(emailHelpTimeout);
+                    emailHelpTimeout = setTimeout(() => {
+                        emailHelp.classList.remove('fade-in');
+                        emailHelp.classList.add('fade-out');
+                        setTimeout(() => {
+                            emailHelp.classList.add('d-none');
+                        }, 500);
+                    }, 5000);
 
-                clearInterval(otpTimerInterval);
-                otpTimerInterval = setInterval(() => {
-                    remaining--;
+                    // Start OTP timer
+                    let remaining = TIMER_DURATION;
+                    timerDisplay.classList.remove('d-none');
                     updateTimerDisplay(remaining);
 
-                    if (remaining <= 0) {
-                        clearInterval(otpTimerInterval);
-                        timerDisplay.classList.add('fade-out');
+                    clearInterval(otpTimerInterval);
+                    otpTimerInterval = setInterval(() => {
+                        remaining--;
+                        updateTimerDisplay(remaining);
+
+                        if (remaining <= 0) {
+                            clearInterval(otpTimerInterval);
+                            timerDisplay.classList.add('fade-out');
+                            setTimeout(() => {
+                                timerDisplay.classList.add('d-none');
+                                timerDisplay.classList.remove('fade-out');
+                                timerDisplay.textContent = '';
+                            }, 500);
+
+                            verifyEmailBtn.disabled = false; // Re-enable button
+                        }
+                    }, 1000);
+
+                    // Hide otp field after 5 minutes
+                    clearTimeout(otpSectionTimeout);
+                    otpSectionTimeout = setTimeout(() => {
+                        otpSection.classList.remove('fade-in');
+                        otpSection.classList.add('fade-out');
                         setTimeout(() => {
-                            timerDisplay.classList.add('d-none');
-                            timerDisplay.classList.remove('fade-out');
-                            timerDisplay.textContent = '';
+                            otpSection.classList.add('d-none');
+                        }, 500);
+                    }, 1000 * 60 * 5);
+
+                    //giving call to route
+                    const response = await fetch("/user/sendOtp", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json" // Tells the server you're sending JSON
+                        },
+                        body: JSON.stringify({ email }),
+                    })
+                    const responseBody = await response.json();
+                    // console.log(responseBody);
+                    if (responseBody.msg) {
+                        emailHelp.innerText = "❌ Email already exist";
+                        emailHelp.classList.add("text-danger");
+                        emailHelp.classList.remove("d-none", "fade-out");
+                        void emailHelp.offsetWidth;
+                        emailHelp.classList.add("fade-in");
+
+                        setTimeout(() => {
+                            emailHelp.classList.remove("fade-in");
+                            emailHelp.classList.add("fade-out");
+
+                            setTimeout(() => {
+                                emailHelp.classList.add("d-none");
+                                emailHelp.classList.remove("text-danger", "fade-out");
+                                emailHelp.innerText = "You have 5 minutes for verification,kindly check your inbox";
+                            }, 500); // Wait for fade-out to complete
+                        }, 2000); // Show for 2 seconds
+                    }
+                }
+
+
+
+                function updateTimerDisplay(seconds) {
+                    const timerDisplay = document.getElementById('otp-timer');
+                    const minutes = Math.floor(seconds / 60);
+                    const secs = seconds % 60;
+                    timerDisplay.textContent = `Resend OTP in ${minutes}:${secs.toString().padStart(2, '0')}`;
+                }
+
+                async function verifyOtp() {
+                    const email = document.getElementById('email').value;
+                    const otp = document.getElementById('otp').value;
+                    const response = await fetch("/user/verifyOtp", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json" // Tells the server you're sending JSON
+                        },
+                        body: JSON.stringify({ email, otp }),
+                    })
+                    if (response.ok) {
+                        // Hide OTP section with fade-out
+                        const otpSection = document.getElementById("otpSection");
+                        otpSection.classList.remove("fade-in");
+                        otpSection.classList.add("fade-out");
+
+                        setTimeout(() => {
+                            otpSection.classList.add("d-none");
                         }, 500);
 
-                        verifyEmailBtn.disabled = false; // Re-enable button
+                        // Show success message
+                        const successMsg = document.getElementById("otpSuccess");
+                        successMsg.classList.remove("d-none");
+                        successMsg.classList.add("fade-in");
+
+                        // Hide error message (in case shown earlier)
+                        document.getElementById("otpError").classList.add("d-none");
+
+                        //disable the verify Email button
+                        document.getElementById("verifyEmailBtn").disabled = true;
+                        document.getElementById("verifyEmailBtn").innerText = "Verified";
+                        document.getElementById("verifyEmailBtn").classList.remove("btn-primary");
+                        document.getElementById("verifyEmailBtn").classList.add("btn-success");
+                    } else {
+                        // Show red error message
+                        const errorMsg = document.getElementById("otpError");
+                        errorMsg.classList.remove("d-none");
+                        errorMsg.classList.add("fade-in");
                     }
-                }, 1000);
 
-                // Hide otp field after 5 minutes
-                clearTimeout(otpSectionTimeout);
-                otpSectionTimeout = setTimeout(() => {
-                    otpSection.classList.remove('fade-in');
-                    otpSection.classList.add('fade-out');
-                    setTimeout(() => {
-                        otpSection.classList.add('d-none');
-                    }, 500);
-                }, 1000 * 60 * 5);
-
-                //giving call to route
-                const response = await fetch("/user/sendOtp", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json" // Tells the server you're sending JSON
-                    },
-                    body: JSON.stringify({ email }),
-                })
-                const responseBody = await response.json();
-                // console.log(responseBody);
-                if (responseBody.msg) {
-                    emailHelp.innerText = "❌ Email already exist";
-                    emailHelp.classList.add("text-danger");
-                    emailHelp.classList.remove("d-none", "fade-out");
-                    void emailHelp.offsetWidth;
-                    emailHelp.classList.add("fade-in");
-
-                    setTimeout(() => {
-                        emailHelp.classList.remove("fade-in");
-                        emailHelp.classList.add("fade-out");
-
-                        setTimeout(() => {
-                            emailHelp.classList.add("d-none");
-                            emailHelp.classList.remove("text-danger", "fade-out");
-                            emailHelp.innerText = "You have 5 minutes for verification,kindly check your inbox";
-                        }, 500); // Wait for fade-out to complete
-                    }, 2000); // Show for 2 seconds
                 }
-            }
-
-
-
-            function updateTimerDisplay(seconds) {
-                const timerDisplay = document.getElementById('otp-timer');
-                const minutes = Math.floor(seconds / 60);
-                const secs = seconds % 60;
-                timerDisplay.textContent = `Resend OTP in ${minutes}:${secs.toString().padStart(2, '0')}`;
-            }
-
-            async function verifyOtp() {
-                const email = document.getElementById('email').value;
-                const otp = document.getElementById('otp').value;
-                const response = await fetch("/user/verifyOtp", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json" // Tells the server you're sending JSON
-                    },
-                    body: JSON.stringify({ email, otp }),
-                })
-                if (response.ok) {
-                    // Hide OTP section with fade-out
-                    const otpSection = document.getElementById("otpSection");
-                    otpSection.classList.remove("fade-in");
-                    otpSection.classList.add("fade-out");
-
-                    setTimeout(() => {
-                        otpSection.classList.add("d-none");
-                    }, 500);
-
-                    // Show success message
-                    const successMsg = document.getElementById("otpSuccess");
-                    successMsg.classList.remove("d-none");
-                    successMsg.classList.add("fade-in");
-
-                    // Hide error message (in case shown earlier)
-                    document.getElementById("otpError").classList.add("d-none");
-
-                    //disable the verify Email button
-                    document.getElementById("verifyEmailBtn").disabled = true;
-                    document.getElementById("verifyEmailBtn").innerText = "Verified";
-                    document.getElementById("verifyEmailBtn").classList.remove("btn-primary");
-                    document.getElementById("verifyEmailBtn").classList.add("btn-success");
-                } else {
-                    // Show red error message
-                    const errorMsg = document.getElementById("otpError");
-                    errorMsg.classList.remove("d-none");
-                    errorMsg.classList.add("fade-in");
-                }
-
-            }
-        </script>
+            </script>
 
 
 
