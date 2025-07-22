@@ -14,8 +14,8 @@ router.get("/verify", (req, res) => {
     return res.render("verify");
 });
 
-router.post("/createAccount", CheckEmail, handleUserInfo);
-router.post("/sendOtp", validateEmail, otpCoolDown, handleSendOtp,);
+router.post("/createAccount", handleUserInfo);
+router.post("/sendOtp", validateEmail, otpCoolDown, CheckEmail, handleSendOtp,);
 router.post("/verifyOtp", validateOtp, handleOtpVerification);
 
 module.exports = router

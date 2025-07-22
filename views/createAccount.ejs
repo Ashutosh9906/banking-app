@@ -177,7 +177,7 @@
                         setTimeout(() => {
                             emailHelp.classList.add("d-none");
                             emailHelp.classList.remove("text-danger", "fade-out");
-                            emailHelp.innerText = "We'll never share your email with anyone else.";
+                            emailHelp.innerText = "You have 5 minutes for verification,kindly check your inbox";
                         }, 500); // Wait for fade-out to complete
                     }, 2000); // Show for 2 seconds
 
@@ -244,6 +244,26 @@
                     },
                     body: JSON.stringify({ email }),
                 })
+                const responseBody = await response.json();
+                // console.log(responseBody);
+                if (responseBody.msg) {
+                    emailHelp.innerText = "❌ Email already exist";
+                    emailHelp.classList.add("text-danger");
+                    emailHelp.classList.remove("d-none", "fade-out");
+                    void emailHelp.offsetWidth;
+                    emailHelp.classList.add("fade-in");
+
+                    setTimeout(() => {
+                        emailHelp.classList.remove("fade-in");
+                        emailHelp.classList.add("fade-out");
+
+                        setTimeout(() => {
+                            emailHelp.classList.add("d-none");
+                            emailHelp.classList.remove("text-danger", "fade-out");
+                            emailHelp.innerText = "You have 5 minutes for verification,kindly check your inbox";
+                        }, 500); // Wait for fade-out to complete
+                    }, 2000); // Show for 2 seconds
+                }
             }
 
 

@@ -10,6 +10,13 @@ async function handleUserInfo(req, res) {
     try {
         const { username, address, BirthDate, email, password } = req.body;
 
+        const isUser = await User.findOne({ email });
+        if(isUser){
+            return res.render("createAccount", {
+                isUser,
+            })
+        }
+
         const saltRounds = 10;
         const hashPassword = await hash(password, saltRounds);
 
