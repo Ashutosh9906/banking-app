@@ -35,12 +35,12 @@ async function CheckEmail(req, res, next) {
         const email = req.body.email;
         const user = await User.findOne({ email });
         if (user) {
-            return res.status(500).json({ msg: "Email already exist" });
+            return res.status(500).json({ err: "Email already exist" });
         }
         next();
     } catch (error) {
         console.log(err);
-        res.status(500).json({ msg:"Email already exist" })
+        res.status(500).json({ msg: "Email already exist" })
     }
 }
 
@@ -48,5 +48,5 @@ module.exports = {
     validateEmail,
     otpCoolDown,
     validateOtp,
-    CheckEmail
+    CheckEmail,
 };

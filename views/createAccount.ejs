@@ -9,6 +9,7 @@
                 background-color: #f8f9fa;
             }
 
+
             .form-container {
                 max-width: 800px;
                 margin: auto;
@@ -62,6 +63,16 @@
                     opacity: 0;
                 }
             }
+
+            h2 {
+                color: #001f3f;
+                font-weight: bold;
+            }
+
+            label {
+                color: #001f3f;
+                font-weight: 500;
+            }
         </style>
 </head>
 
@@ -69,7 +80,7 @@
     <%- include('./partials/nav') %>
         <div class="container mt-5">
             <div class="form-container">
-                <h2 class="mb-4 text-center text-primary">Create Account</h2>
+                <h2 class="mb-4 text-center">Create Account in Crescent</h2>
                 <form action="/user/createAccount" method="post">
 
                     <!-- Username -->
@@ -186,59 +197,6 @@
                         return;
                     }
 
-                    // Show OTP section and email help
-                    otpSection.classList.remove('d-none');
-                    emailHelp.classList.remove('d-none', 'fade-out');
-                    void emailHelp.offsetWidth;
-                    emailHelp.classList.add('fade-in');
-
-                    // Disable Verify Email button
-                    verifyEmailBtn.disabled = true;
-
-                    // Hide email help after 5 seconds
-                    clearTimeout(emailHelpTimeout);
-                    emailHelpTimeout = setTimeout(() => {
-                        emailHelp.classList.remove('fade-in');
-                        emailHelp.classList.add('fade-out');
-                        setTimeout(() => {
-                            emailHelp.classList.add('d-none');
-                        }, 500);
-                    }, 5000);
-
-                    // Start OTP timer
-                    let remaining = TIMER_DURATION;
-                    timerDisplay.classList.remove('d-none');
-                    updateTimerDisplay(remaining);
-
-                    clearInterval(otpTimerInterval);
-                    otpTimerInterval = setInterval(() => {
-                        remaining--;
-                        updateTimerDisplay(remaining);
-
-                        if (remaining <= 0) {
-                            clearInterval(otpTimerInterval);
-                            timerDisplay.classList.add('fade-out');
-                            setTimeout(() => {
-                                timerDisplay.classList.add('d-none');
-                                timerDisplay.classList.remove('fade-out');
-                                timerDisplay.textContent = '';
-                            }, 500);
-
-                            verifyEmailBtn.disabled = false; // Re-enable button
-                        }
-                    }, 1000);
-
-                    // Hide otp field after 5 minutes
-                    clearTimeout(otpSectionTimeout);
-                    otpSectionTimeout = setTimeout(() => {
-                        otpSection.classList.remove('fade-in');
-                        otpSection.classList.add('fade-out');
-                        setTimeout(() => {
-                            otpSection.classList.add('d-none');
-                        }, 500);
-                    }, 1000 * 60 * 5);
-
-                    //giving call to route
                     const response = await fetch("/user/sendOtp", {
                         method: "POST",
                         headers: {
@@ -248,7 +206,7 @@
                     })
                     const responseBody = await response.json();
                     // console.log(responseBody);
-                    if (responseBody.msg) {
+                    if (responseBody.err ) {
                         emailHelp.innerText = "❌ Email already exist";
                         emailHelp.classList.add("text-danger");
                         emailHelp.classList.remove("d-none", "fade-out");
@@ -265,7 +223,63 @@
                                 emailHelp.innerText = "You have 5 minutes for verification,kindly check your inbox";
                             }, 500); // Wait for fade-out to complete
                         }, 2000); // Show for 2 seconds
+                        return;
+                    } else {
+                        // Show OTP section and email help
+                        otpSection.classList.remove('d-none');
+                        emailHelp.classList.remove('d-none', 'fade-out');
+                        void emailHelp.offsetWidth;
+                        emailHelp.classList.add('fade-in');
+
+                        // Disable Verify Email button
+                        verifyEmailBtn.disabled = true;
+
+                        // Hide email help after 5 seconds
+                        clearTimeout(emailHelpTimeout);
+                        emailHelpTimeout = setTimeout(() => {
+                            emailHelp.classList.remove('fade-in');
+                            emailHelp.classList.add('fade-out');
+                            setTimeout(() => {
+                                emailHelp.classList.add('d-none');
+                            }, 500);
+                        }, 5000);
+
+                        // Start OTP timer
+                        let remaining = TIMER_DURATION;
+                        timerDisplay.classList.remove('d-none');
+                        updateTimerDisplay(remaining);
+
+                        clearInterval(otpTimerInterval);
+                        otpTimerInterval = setInterval(() => {
+                            remaining--;
+                            updateTimerDisplay(remaining);
+
+                            if (remaining <= 0) {
+                                clearInterval(otpTimerInterval);
+                                timerDisplay.classList.add('fade-out');
+                                setTimeout(() => {
+                                    timerDisplay.classList.add('d-none');
+                                    timerDisplay.classList.remove('fade-out');
+                                    timerDisplay.textContent = '';
+                                }, 500);
+
+                                verifyEmailBtn.disabled = false; // Re-enable button
+                            }
+                        }, 1000);
+
+                        // Hide otp field after 5 minutes
+                        clearTimeout(otpSectionTimeout);
+                        otpSectionTimeout = setTimeout(() => {
+                            otpSection.classList.remove('fade-in');
+                            otpSection.classList.add('fade-out');
+                            setTimeout(() => {
+                                otpSection.classList.add('d-none');
+                            }, 500);
+                        }, 1000 * 60 * 5);
                     }
+
+                    //giving call to route
+
                 }
 
 

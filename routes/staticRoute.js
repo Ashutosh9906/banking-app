@@ -1,6 +1,6 @@
 const { Router } = require("express");
 
-const { handleUserInfo } = require("../controller/user")
+const { handleUserInfo, handleVerifyPassword } = require("../controller/user")
 const { handleSendOtp, handleOtpVerification } = require("../controller/otpCont")
 const { validateEmail, otpCoolDown, validateOtp, CheckEmail } = require("../middlewares/validateEmail")
 
@@ -10,12 +10,13 @@ router.get("/createAccount", (req, res) => {
     return res.render("createAccount");
 });
 
-router.get("/verify", (req, res) => {
-    return res.render("verify");
-});
+router.get("/login", (req, res) => {
+    return res.render("login");
+})
 
 router.post("/createAccount", handleUserInfo);
 router.post("/sendOtp", validateEmail, otpCoolDown, CheckEmail, handleSendOtp,);
 router.post("/verifyOtp", validateOtp, handleOtpVerification);
+router.post("/verifyPassword", handleVerifyPassword);
 
 module.exports = router

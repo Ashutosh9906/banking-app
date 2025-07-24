@@ -20,6 +20,9 @@ app.use(express.urlencoded({ extended:true }));
 //     res.render("home");
 // });
 
+app.get("/home", (req, res) => {
+        return res.render("home");
+})
 app.use("/user", staticRoute);
 
 app.listen(PORT, () => console.log(`Server started at PORT:${PORT}`));

@@ -40,6 +40,17 @@ async function handleUserInfo(req, res) {
     }
 }
 
+async function handleVerifyPassword(req, res){
+    const {email, password} = req.body;
+    let user = await User.findOne({ email });
+    console.log("User : ", user);
+    if(!user){
+        return res.status(404).json({ err: "User not exist" });
+    }
+    return res.status(200).json({ msg: "Success" });
+}
+
 module.exports = {
     handleUserInfo,
+    handleVerifyPassword
 }
