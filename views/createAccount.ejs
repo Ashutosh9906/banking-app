@@ -183,7 +183,8 @@
                         emailHelp.classList.add("fade-in");
 
                         // Hide and reset after 2 seconds
-                        setTimeout(() => {
+                        clearTimeout(emailHelpTimeout)
+                        emailHelpTimeout = setTimeout(() => {
                             emailHelp.classList.remove("fade-in");
                             emailHelp.classList.add("fade-out");
 
@@ -206,13 +207,14 @@
                     })
                     const responseBody = await response.json();
                     // console.log(responseBody);
-                    if (responseBody.err ) {
+                    if (responseBody.err) {
                         emailHelp.innerText = "❌ Email already exist";
                         emailHelp.classList.add("text-danger");
                         emailHelp.classList.remove("d-none", "fade-out");
                         void emailHelp.offsetWidth;
                         emailHelp.classList.add("fade-in");
 
+                        clearTimeout(emailHelpTimeout);
                         setTimeout(() => {
                             emailHelp.classList.remove("fade-in");
                             emailHelp.classList.add("fade-out");
@@ -225,13 +227,21 @@
                         }, 2000); // Show for 2 seconds
                         return;
                     } else {
-                        // Show OTP section and email help
-                        otpSection.classList.remove('d-none');
-                        emailHelp.classList.remove('d-none', 'fade-out');
+                        clearTimeout(otpSectionTimeout);
+                        clearInterval(otpTimerInterval);
+
+                        // Show OTP section
+                        otpSection.classList.remove('d-none', 'fade-out', 'fade-in');
+                        void otpSection.offsetWidth;
+                        otpSection.classList.add('fade-in');
+
+                        // Reset and show emailHelp
+                        emailHelp.classList.remove('d-none', 'fade-out', 'text-danger');
+                        emailHelp.innerText = "You have 5 minutes for verification, kindly check your inbox";
                         void emailHelp.offsetWidth;
                         emailHelp.classList.add('fade-in');
 
-                        // Disable Verify Email button
+                        // Disable button
                         verifyEmailBtn.disabled = true;
 
                         // Hide email help after 5 seconds
@@ -244,12 +254,11 @@
                             }, 500);
                         }, 5000);
 
-                        // Start OTP timer
+                        // Start timer
                         let remaining = TIMER_DURATION;
                         timerDisplay.classList.remove('d-none');
                         updateTimerDisplay(remaining);
 
-                        clearInterval(otpTimerInterval);
                         otpTimerInterval = setInterval(() => {
                             remaining--;
                             updateTimerDisplay(remaining);
@@ -262,13 +271,11 @@
                                     timerDisplay.classList.remove('fade-out');
                                     timerDisplay.textContent = '';
                                 }, 500);
-
-                                verifyEmailBtn.disabled = false; // Re-enable button
+                                verifyEmailBtn.disabled = false;
                             }
                         }, 1000);
 
-                        // Hide otp field after 5 minutes
-                        clearTimeout(otpSectionTimeout);
+                        // Schedule OTP section to hide after 5 minutes
                         otpSectionTimeout = setTimeout(() => {
                             otpSection.classList.remove('fade-in');
                             otpSection.classList.add('fade-out');
@@ -277,6 +284,7 @@
                             }, 500);
                         }, 1000 * 60 * 5);
                     }
+
 
                     //giving call to route
 

@@ -116,12 +116,27 @@
                             body: JSON.stringify({ email, password })
                         });
                         const responseBody = await response.json();
-                        if (!response.ok) {
+                        //console.log(responseBody);
+                        if (responseBody.err) {
                             console.error("Server error:", responseBody.err);  // Custom error from backend
-                            // handle error (show message on UI etc.)
-                        } else {
-                            console.log("response", responseBody); // Success response
-                            // proceed with successful flow
+                            emailHelp.textContent = "❌ Email does not exist, Create Account first!";
+                            emailHelp.classList.remove("d-none", "fade-out");
+                            void emailHelp.offsetWidth; // Trigger reflow
+                            emailHelp.classList.add("fade-in");
+
+                            setTimeout(() => {
+                                emailHelp.classList.remove("fade-in");
+                                emailHelp.classList.add("fade-out");
+                                setTimeout(() => {
+                                    emailHelp.classList.add("d-none");
+                                }, 500);
+                            }, 2000);
+                            return;
+                        } 
+                        if(responseBody.redirect) {
+                            //console.log("response", responseBody); // Success response
+                            console.log("Redirect to : ", responseBody.redirect);
+                            window.location.href = responseBody.redirect;
                         }
                     } catch (error) {
                         console.error("Fetch or json parse failed", error);
