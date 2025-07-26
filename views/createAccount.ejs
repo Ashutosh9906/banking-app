@@ -198,6 +198,19 @@
                         return;
                     }
 
+                    // Show loading spinner in emailHelp
+                    emailHelp.innerHTML = `
+                         <div class="d-flex align-items-center gap-2">
+                            <div class="spinner-border text-success" role="status" style="width: 1rem; height: 1rem;">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <span>Processing...</span>
+                        </div>`;
+                    emailHelp.classList.remove('d-none', 'fade-out', 'text-danger');
+                    void emailHelp.offsetWidth;
+                    emailHelp.classList.add('fade-in');
+
+
                     const response = await fetch("/user/sendOtp", {
                         method: "POST",
                         headers: {
@@ -226,71 +239,93 @@
                             }, 500); // Wait for fade-out to complete
                         }, 2000); // Show for 2 seconds
                         return;
-                    } else {
-                        clearTimeout(otpSectionTimeout);
-                        clearInterval(otpTimerInterval);
-
-                        // Show OTP section
-                        otpSection.classList.remove('d-none', 'fade-out', 'fade-in');
-                        void otpSection.offsetWidth;
-                        otpSection.classList.add('fade-in');
-
-                        // Reset and show emailHelp
-                        emailHelp.classList.remove('d-none', 'fade-out', 'text-danger');
-                        emailHelp.innerText = "You have 5 minutes for verification, kindly check your inbox";
+                    }
+                    console.log("MSG : ", responseBody.msg)
+                    if(responseBody.msg == "CoolDown Period"){
+                        emailHelp.innerText = "❌ Cooldown Period, Try After an 1 Minute";
+                        emailHelp.classList.add("text-danger");
+                        emailHelp.classList.remove("d-none", "fade-out");
                         void emailHelp.offsetWidth;
-                        emailHelp.classList.add('fade-in');
+                        emailHelp.classList.add("fade-in");
 
-                        // Disable button
-                        verifyEmailBtn.disabled = true;
-
-                        // Hide email help after 5 seconds
                         clearTimeout(emailHelpTimeout);
-                        emailHelpTimeout = setTimeout(() => {
-                            emailHelp.classList.remove('fade-in');
-                            emailHelp.classList.add('fade-out');
-                            setTimeout(() => {
-                                emailHelp.classList.add('d-none');
-                            }, 500);
-                        }, 5000);
+                        setTimeout(() => {
+                            emailHelp.classList.remove("fade-in");
+                            emailHelp.classList.add("fade-out");
 
-                        // Start timer
-                        let remaining = TIMER_DURATION;
-                        timerDisplay.classList.remove('d-none');
+                            setTimeout(() => {
+                                emailHelp.classList.add("d-none");
+                                emailHelp.classList.remove("text-danger", "fade-out");
+                                emailHelp.innerText = "You have 5 minutes for verification,kindly check your inbox";
+                            }, 500); // Wait for fade-out to complete
+                        }, 2000); // Show for 2 seconds
+                        return;
+                    }
+                    
+                    clearTimeout(otpSectionTimeout);
+                    clearInterval(otpTimerInterval);
+
+                    // Show OTP section
+                    otpSection.classList.remove('d-none');
+                    otpSection.style.display = 'block'; // Ensure it's rendered
+
+                    // Force browser to apply styles before continuing
+                    requestAnimationFrame(() => {
+                        otpSection.classList.remove('fade-out', 'fade-in'); // Clean slates
+                        void otpSection.offsetWidth; // Trigger reflow
+                        otpSection.classList.add('fade-in');
+                    });
+
+
+                    // Reset and show emailHelp
+                    emailHelp.classList.remove('d-none', 'fade-out', 'text-danger');
+                    emailHelp.innerText = "You have 5 minutes for verification, kindly check your inbox";
+                    void emailHelp.offsetWidth;
+                    emailHelp.classList.add('fade-in');
+
+                    // Disable button
+                    verifyEmailBtn.disabled = true;
+
+                    // Hide email help after 5 seconds
+                    clearTimeout(emailHelpTimeout);
+                    emailHelpTimeout = setTimeout(() => {
+                        emailHelp.classList.remove('fade-in');
+                        emailHelp.classList.add('fade-out');
+                        setTimeout(() => {
+                            emailHelp.classList.add('d-none');
+                        }, 500);
+                    }, 5000);
+
+                    // Start timer
+                    let remaining = TIMER_DURATION;
+                    timerDisplay.classList.remove('d-none');
+                    updateTimerDisplay(remaining);
+
+                    otpTimerInterval = setInterval(() => {
+                        remaining--;
                         updateTimerDisplay(remaining);
 
-                        otpTimerInterval = setInterval(() => {
-                            remaining--;
-                            updateTimerDisplay(remaining);
-
-                            if (remaining <= 0) {
-                                clearInterval(otpTimerInterval);
-                                timerDisplay.classList.add('fade-out');
-                                setTimeout(() => {
-                                    timerDisplay.classList.add('d-none');
-                                    timerDisplay.classList.remove('fade-out');
-                                    timerDisplay.textContent = '';
-                                }, 500);
-                                verifyEmailBtn.disabled = false;
-                            }
-                        }, 1000);
-
-                        // Schedule OTP section to hide after 5 minutes
-                        otpSectionTimeout = setTimeout(() => {
-                            otpSection.classList.remove('fade-in');
-                            otpSection.classList.add('fade-out');
+                        if (remaining <= 0) {
+                            clearInterval(otpTimerInterval);
+                            timerDisplay.classList.add('fade-out');
                             setTimeout(() => {
-                                otpSection.classList.add('d-none');
+                                timerDisplay.classList.add('d-none');
+                                timerDisplay.classList.remove('fade-out');
+                                timerDisplay.textContent = '';
                             }, 500);
-                        }, 1000 * 60 * 5);
-                    }
+                            verifyEmailBtn.disabled = false;
+                        }
+                    }, 1000);
 
-
-                    //giving call to route
-
+                    // Schedule OTP section to hide after 5 minutes
+                    otpSectionTimeout = setTimeout(() => {
+                        otpSection.classList.remove('fade-in');
+                        otpSection.classList.add('fade-out');
+                        setTimeout(() => {
+                            otpSection.classList.add('d-none');
+                        }, 500);
+                    }, 1000 * 60 * 5);
                 }
-
-
 
                 function updateTimerDisplay(seconds) {
                     const timerDisplay = document.getElementById('otp-timer');

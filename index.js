@@ -1,6 +1,7 @@
 const express = require("express");
 const { resolve } = require("path");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 
 const staticRoute = require("./routes/staticRoute")
 
@@ -15,6 +16,7 @@ app.set("views", resolve("./views"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended:true }));
+app.use(cookieParser());
 
 // app.get("/", (req, res) => {
 //     res.render("home");

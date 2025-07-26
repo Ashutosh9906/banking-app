@@ -2,6 +2,7 @@ const User = require("../models/user")
 const crpto = require("crypto");
 const { sendOtp } = require("../utilities/otpUtilty");
 const { hash, compare } = require("bcryptjs");
+const { createTokenForUser } = require("../utilities/authentication")
 
 const Otp = require("../models/otp");
 
@@ -33,7 +34,16 @@ async function handleUserInfo(req, res) {
             email,
             password: hashPassword,
         })
-        return res.redirect("/home");
+
+        const token = createTokenForUser(user._id, "USER");
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            maxAge: 30 * 60 * 1000
+        });
+
+        res.redirect("/home");
     } catch (error) {
         console.log("Error : ", error);
         return res.status(401).json({ success: false });
@@ -52,6 +62,14 @@ async function handleVerifyPassword(req, res) {
         return res.status(400).json({ err: "Error" })
     }
 
+    const token = createTokenForUser(user._id, "USER");
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+        maxAge: 30 * 60 * 1000
+    });
+    
     // console.log("Status: Failed")
     //console.log("Status: Success")
     return res.status(200).json({ redirect: "/home" });

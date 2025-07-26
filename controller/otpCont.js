@@ -38,9 +38,10 @@ async function handleOtpVerification(req, res) {
             return res.status(200).json({ status: "success" });
         }
         // console.log("Otp isMatched: ", isMatch)
-        return res.status(401).json({ status: failed });
+        return res.status(401).json({ status: "failed" });
     } catch (err) {
         console.log(err);
+        return res.status(500).json({ err: "internal server error" });
     }
 }
 
