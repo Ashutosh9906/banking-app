@@ -75,7 +75,11 @@ async function handleVerifyPassword(req, res) {
     
     // console.log("Status: Failed")
     //console.log("Status: Success")
-    return res.status(200).json({ redirect: "/home" });
+    return res.status(200).json({ 
+        redirect: "/home",
+        firstName: user.firstName,
+        id: user._id
+    });
 }
 
 module.exports = {
