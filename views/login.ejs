@@ -136,6 +136,8 @@
                         if(responseBody.redirect) {
                             //console.log("response", responseBody); // Success response
                             console.log("Redirect to : ", responseBody.redirect);
+                            localStorage.setItem("firstName", responseBody.firstName)
+                            localStorage.setItem("ID", responseBody.id)
                             window.location.href = responseBody.redirect;
                         }
                     } catch (error) {

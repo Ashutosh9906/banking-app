@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const path = require("node:path");
 
-const staticRoute = require("./routes/staticRoute")
+const staticRoute = require("./routes/staticRoute");
+const manageRoute = require("./routes/manageRoutes");
 
 const PORT = 3000;
 const app = express();
@@ -28,6 +29,7 @@ app.use(cookieParser());
 app.get("/home", (req, res) => {
         return res.render("home");
 })
+app.use("/account", manageRoute)
 app.use("/user", staticRoute);
 
 app.listen(PORT, () => console.log(`Server started at PORT:${PORT}`));
