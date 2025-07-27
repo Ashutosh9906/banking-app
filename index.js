@@ -2,11 +2,14 @@ const express = require("express");
 const { resolve } = require("path");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const path = require("node:path");
 
 const staticRoute = require("./routes/staticRoute")
 
 const PORT = 3000;
 const app = express();
+
+app.use(express.static(path.join(__dirname, "public"))); 
 
 mongoose.connect("mongodb://localhost:27017/banking-app")
         .then(() => console.log("MongoDB Connected"));

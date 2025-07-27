@@ -9,7 +9,7 @@ const Otp = require("../models/otp");
 async function handleUserInfo(req, res) {
     //console.log(req.body);
     try {
-        const { username, address, BirthDate, email, password } = req.body;
+        const { firstName, lastName, address, birthDate, email, password } = req.body;
 
         const isUser = await User.findOne({ email });
         if (isUser) {
@@ -28,9 +28,10 @@ async function handleUserInfo(req, res) {
         }
 
         const user = await User.create({
-            username,
+            firstName,
+            lastName,
             address,
-            BirthDate,
+            birthDate,
             email,
             password: hashPassword,
         })
@@ -42,6 +43,7 @@ async function handleUserInfo(req, res) {
             sameSite: "lax",
             maxAge: 30 * 60 * 1000
         });
+        res.locals.token = req.cookies.token
 
         res.redirect("/home");
     } catch (error) {
@@ -69,6 +71,7 @@ async function handleVerifyPassword(req, res) {
         sameSite: "lax",
         maxAge: 30 * 60 * 1000
     });
+    res.locals.token = req.cookies.token
     
     // console.log("Status: Failed")
     //console.log("Status: Success")

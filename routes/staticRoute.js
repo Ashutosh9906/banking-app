@@ -12,7 +12,13 @@ router.get("/createAccount", (req, res) => {
 
 router.get("/login", (req, res) => {
     return res.render("login");
-})
+});
+
+router.get('/logout', (req, res) => {
+    res.clearCookie('token'); // Clear the 'token' cookie
+    res.redirect('/user/login'); // Redirect to login page
+});
+
 
 router.post("/createAccount", handleUserInfo);
 router.post("/sendOtp", validateEmail, otpCoolDown, CheckEmail, handleSendOtp,);

@@ -3,15 +3,212 @@
 
 <head>
     <%- include('./partials/head') %>
-        <title>Home</title>
+        <title>Cresent Bank - Welcome</title>
+        <style>
+            body {
+                background-color: #f4f6f8;
+                font-family: 'Segoe UI', sans-serif;
+            }
+
+            .hero {
+                background-color: #001f3f;
+                color: white;
+                padding: 100px 0;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .feature-icon {
+                font-size: 2rem;
+                color: #001f3f;
+            }
+
+            .section-title {
+                color: #001f3f;
+                font-weight: bold;
+            }
+
+            .footer {
+                background-color: #001f3f;
+                color: white;
+                padding: 40px 0;
+            }
+
+            .card-img-top {
+                height: 200px;
+                /* You can adjust this height */
+                object-fit: cover;
+                object-position: center;
+            }
+
+            .card {
+                height: 100%;
+            }
+
+            .card {
+                height: 100%;
+                border: 1px solid #ccc;
+                /* subtle border */
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                /* soft shadow */
+                transition: transform 0.2s ease;
+                background-color: #ffffff;
+                overflow: hidden;
+            }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .card-img-top {
+                height: 200px;
+                object-fit: cover;
+                object-position: center;
+                border-bottom: 1px solid #ddd;
+                /* separates image and text */
+            }
+
+            .card-body {
+                background-color: #fafafa;
+                /* light gray to contrast white image */
+            }
+
+            .card-img-top::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 20px;
+                background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));
+                pointer-events: none;
+            }
+
+            .card-img-top {
+                position: relative;
+            }
+        </style>
 </head>
 
 <body>
     <%- include('./partials/nav') %>
-    <div class="container mt-5">
-        
-    </div>
-    <%- include('./partials/scripts') %>
+
+        <!-- Hero Section -->
+        <section class="hero text-center">
+            <div class="container">
+                <h1 class="display-4">Welcome to Cresent Bank</h1>
+                <p class="lead">Secure. Reliable. Always with you.</p>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-5 bg-light">
+            <div class="container text-center">
+                <h2 class="section-title mb-4">Why Choose Cresent Bank?</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <img src="/Top-notch Security.webp" class="img-fluid rounded" alt="Secure Banking">
+                        <h5 class="mt-3">Top-notch Security</h5>
+                        <p>We use military-grade encryption to keep your money and data safe.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="/Instant Transfers.jpeg" class="img-fluid rounded" alt="Fast Transfers">
+                        <h5 class="mt-3">Instant Transfers</h5>
+                        <p>Send money to anyone, anywhere, anytime with zero delays.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="/customer Support2.jpg" class="img-fluid rounded" alt="24/7 Support">
+                        <h5 class="mt-3">24/7 Customer Support</h5>
+                        <p>Got a question? We're always here to help, any time of the day.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="py-5">
+            <div class="container">
+                <h2 class="section-title text-center mb-4">Our Services</h2>
+                <div class="row text-center">
+                    <div class="col-md-3" onclick="window.location.href='/user/'" style="cursor: pointer;">
+                        <div class="card h-100 shadow-sm">
+                            <img src="/money-transfer.jpg" class="card-img-top" alt="Savings Account">
+                            <div class="card-body">
+                                <h5>Transfer Money</h5>
+                                <p>Grow your money with attractive interest rates.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100 shadow-sm">
+                            <img src="/split wise.webp" class="card-img-top" alt="Current Account">
+                            <div class="card-body">
+                                <h5>Split Wise</h5>
+                                <p>Perfect for your business transactions and expenses.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100 shadow-sm">
+                            <img src="/fixed Deposit.jpg" class="card-img-top" alt="Fixed Deposits">
+                            <div class="card-body">
+                                <h5>Fixed Deposits</h5>
+                                <p>High returns on long-term deposits with guaranteed safety.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100 shadow-sm">
+                            <img src="/bank statement.jpg" class="card-img-top" alt="Loan Services">
+                            <div class="card-body">
+                                <h5>Bank Statement</h5>
+                                <p>Home, auto or personal loans at competitive rates.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h2 class="section-title text-center mb-4">What Our Customers Say</h2>
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <blockquote class="blockquote">
+                            <p>"Cresent Bank made online banking super easy. Love the interface and security!"</p>
+                            <footer class="blockquote-footer">Riya Sharma</footer>
+                        </blockquote>
+                    </div>
+                    <div class="col-md-4">
+                        <blockquote class="blockquote">
+                            <p>"The support team is incredibly responsive. They helped me resolve an issue in minutes."
+                            </p>
+                            <footer class="blockquote-footer">Amit Mehra</footer>
+                        </blockquote>
+                    </div>
+                    <div class="col-md-4">
+                        <blockquote class="blockquote">
+                            <p>"Best banking experience so far. Everything is digital and hassle-free!"</p>
+                            <footer class="blockquote-footer">Siddharth Kulkarni</footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer text-center">
+            <div class="container">
+                <p class="mb-2">&copy; 2025 Cresent Bank. All rights reserved.</p>
+                <p>Privacy Policy | Terms & Conditions | Contact Us</p>
+            </div>
+        </footer>
+        <%- include('./partials/scripts') %>
 </body>
 
 </html>

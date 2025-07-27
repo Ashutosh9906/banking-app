@@ -1,7 +1,11 @@
 const { Schema, model } = require("mongoose")
 
 const userSchema = new Schema({
-    username:{
+    firstName:{
+        type:String,
+        required:true,
+    },
+    lastName:{
         type:String,
         required:true,
     },
@@ -9,7 +13,7 @@ const userSchema = new Schema({
         type:String,
         required:true,
     },
-    BirthDate:{
+    birthDate:{
         type:Date,
         required:true,
     },
@@ -21,6 +25,10 @@ const userSchema = new Schema({
     password:{
         type: String,
         required: true,
+    },
+    balance:{
+        type: Number,
+        default: 5000
     },
     role:{
         type: String,
