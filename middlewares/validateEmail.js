@@ -1,6 +1,8 @@
 const Otp = require("../models/otp");
 const User = require("../models/user");
 
+const { verifyTokenUser } = require("../utilities/authentication")
+
 async function validateEmail(req, res, next) {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!pattern.test(req.body.email)) {
@@ -44,9 +46,28 @@ async function CheckEmail(req, res, next) {
     }
 }
 
+async function verifyToken(req, res, next) {
+    try {
+        const token = req.cookies?.token;
+        if (!token) {
+            return res.redirect("/user/login")
+        }
+        const user = verifyTokenUser(token);
+        if (!user) {
+            return res.redirect("/user/login")
+        }
+        req.user = user;
+        next()
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ msg: "Internal Server Error" })
+    }
+}
+
 module.exports = {
     validateEmail,
     otpCoolDown,
     validateOtp,
     CheckEmail,
+    verifyToken
 };

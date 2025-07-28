@@ -81,84 +81,82 @@
         <div class="container mt-5">
             <div class="form-container">
                 <h2 class="mb-4 text-center">Create Account in Crescent</h2>
-                <form action="/user/createAccount" method="post">
 
-                    <!-- Username -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" id="firstName" name="firstName" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" name="lastName" required>
-                        </div>
+                <!-- Username -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+
+
+                <!-- Address -->
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                </div>
+
+                <!-- Date of Birth -->
+                <div class="mb-3">
+                    <label for="BirthDate" class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" id="birthDate" name="birthDate" required>
+                </div>
+
+                <!-- Email with Verify Button -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <div class="d-flex">
+                        <input type="email"
+                            pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
+                            class="form-control rounded-0 rounded-start" aria-required="true" id="email" name="email"
+                            placeholder="Enter email" required>
+                        <button type="button" class="btn btn-primary rounded-0 rounded-end px-4 fw-semibold"
+                            style="width: 160px;" onclick="showOtp()" id="verifyEmailBtn">
+                            Verify Email
+                        </button>
+                    </div>
+                    <div id="emailHelp" class="form-text text-success d-none mt-1">You have 5 minutes for
+                        verification,
+                        kindly check your inbox</div>
+                </div>
+
+                <!-- OTP Field (Initially Hidden) -->
+                <div id="otpSection" class="mb-3 d-none">
+                    <div class="d-flex align-items-center mb-1">
+                        <label for="otp" class="form-label mb-0 me-2">OTP</label>
+                        <span id="otp-timer" class="text-danger small d-none">01:00</span>
+                    </div>
+                    </label>
+                    <div class="d-flex">
+                        <input type="text" class="form-control rounded-0 rounded-start" id="otp" name="otp"
+                            placeholder="Enter OTP" required>
+                        <button type="button" class="btn btn-success rounded-0 rounded-end px-4 fw-semibold"
+                            style="width: 160px;" onclick="verifyOtp()">Verify OTP</button>
                     </div>
 
-
-                    <!-- Address -->
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                    <!-- Invalid OTP Message -->
+                    <div id="otpError" class="form-text text-danger mt-1 d-none">
+                        ❌ Invalid OTP. Try again.
                     </div>
+                </div>
 
-                    <!-- Date of Birth -->
-                    <div class="mb-3">
-                        <label for="BirthDate" class="form-label">Date of Birth</label>
-                        <input type="date" class="form-control" id="BirthDate" name="birthDate" required>
-                    </div>
+                <div id="otpSuccess" class="form-text text-success mt-2 d-none">
+                    ✅ Email verified successfully!
+                </div>
 
-                    <!-- Email with Verify Button -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email address</label>
-                        <div class="d-flex">
-                            <input type="email"
-                                pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
-                                class="form-control rounded-0 rounded-start" aria-required="true" id="email"
-                                name="email" placeholder="Enter email" required>
-                            <button type="button" class="btn btn-primary rounded-0 rounded-end px-4 fw-semibold"
-                                style="width: 160px;" onclick="showOtp()" id="verifyEmailBtn">
-                                Verify Email
-                            </button>
-                        </div>
-                        <div id="emailHelp" class="form-text text-success d-none mt-1">You have 5 minutes for
-                            verification,
-                            kindly check your inbox</div>
-                    </div>
+                <!-- Password -->
+                <div class="mb-4">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
 
-                    <!-- OTP Field (Initially Hidden) -->
-                    <div id="otpSection" class="mb-3 d-none">
-                        <div class="d-flex align-items-center mb-1">
-                            <label for="otp" class="form-label mb-0 me-2">OTP</label>
-                            <span id="otp-timer" class="text-danger small d-none">01:00</span>
-                        </div>
-                        </label>
-                        <div class="d-flex">
-                            <input type="text" class="form-control rounded-0 rounded-start" id="otp" name="otp"
-                                placeholder="Enter OTP" required>
-                            <button type="button" class="btn btn-success rounded-0 rounded-end px-4 fw-semibold"
-                                style="width: 160px;" onclick="verifyOtp()">Verify OTP</button>
-                        </div>
-
-                        <!-- Invalid OTP Message -->
-                        <div id="otpError" class="form-text text-danger mt-1 d-none">
-                            ❌ Invalid OTP. Try again.
-                        </div>
-                    </div>
-
-                    <div id="otpSuccess" class="form-text text-success mt-2 d-none">
-                        ✅ Email verified successfully!
-                    </div>
-
-                    <!-- Password -->
-                    <div class="mb-4">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-
-                    <!-- Submit -->
-                    <button type="submit" class="btn btn-success">Create Account</button>
-                </form>
+                <!-- Submit -->
+                <button type="submit" onclick="submitForm()" class="btn btn-success">Create Account</button>
             </div>
         </div>
 
@@ -381,6 +379,36 @@
                         errorMsg.classList.add("fade-in");
                     }
 
+                }
+                async function submitForm() {
+                    const data = {
+                        firstName: document.getElementById("firstName").value,
+                        lastName: document.getElementById("lastName").value,
+                        address: document.getElementById("address").value,
+                        birthDate: document.getElementById("birthDate").value,
+                        email: document.getElementById("email").value,
+                        password: document.getElementById("password").value,
+                    };
+                    try {
+                        const response = await fetch("/user/createAccount", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(data),
+                        });
+                        const responseBody = await response.json();
+                        if (responseBody.redirect) {
+                            //console.log("response", responseBody); // Success response
+                            console.log("Redirect to : ", responseBody.redirect);
+                            localStorage.setItem("firstName", responseBody.firstName)
+                            localStorage.setItem("ID", responseBody.id)
+                            window.location.href = responseBody.redirect;
+                        }
+                    } catch (error) {
+                        console.error("Network error:", error);
+                        alert("Server error. Try again later.");
+                    }
                 }
             </script>
 

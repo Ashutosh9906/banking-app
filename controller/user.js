@@ -45,7 +45,11 @@ async function handleUserInfo(req, res) {
         });
         res.locals.token = req.cookies.token
 
-        res.redirect("/home");
+        return res.status(200).json({
+            redirect: "/home",
+            firstName: user.firstName,
+            id: user._id
+        });
     } catch (error) {
         console.log("Error : ", error);
         return res.status(401).json({ success: false });
@@ -72,10 +76,10 @@ async function handleVerifyPassword(req, res) {
         maxAge: 30 * 60 * 1000
     });
     res.locals.token = req.cookies.token
-    
+
     // console.log("Status: Failed")
     //console.log("Status: Success")
-    return res.status(200).json({ 
+    return res.status(200).json({
         redirect: "/home",
         firstName: user.firstName,
         id: user._id

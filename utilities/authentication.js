@@ -8,6 +8,13 @@ function createTokenForUser(id, role){
     return token;
 }
 
+function verifyTokenUser(token){
+    const user = jwt.verify(token, process.env.SECRET)
+    if(!user) return;
+    return user;
+}
+
 module.exports = {
-    createTokenForUser
+    createTokenForUser,
+    verifyTokenUser
 }

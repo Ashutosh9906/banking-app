@@ -9,7 +9,7 @@ const {
 
 const router = Router();
 
-router.post("/transferMoney", handleTransferMoney);
+router.get("/transferMoney", handleTransferMoney);
 router.post("/splitMoney", handleSplitMoney);
 router.post("/fixedDeposit", handleFixedDeposit);
 router.post("/bankStatement", handleBankStatement);
